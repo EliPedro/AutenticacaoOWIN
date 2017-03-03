@@ -9,6 +9,14 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
+
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            @:Olá @User.Identity.Name 
+
+        }
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -23,7 +31,11 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Área Livre", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Área Restrita", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Área Restrita", "Index", "AreaRestrita")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Cadastre-se", "Cadastrar", "Usuario")</li>
+                    <li>@Html.ActionLink("Login in", "Login", "Login")</li>
                 </ul>
             </div>
         </div>

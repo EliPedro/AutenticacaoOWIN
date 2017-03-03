@@ -14,7 +14,7 @@ namespace OwinAuthentication
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Usuario/Login")
+                LoginPath = new PathString("/Login/Login")
             });
         }
     }
