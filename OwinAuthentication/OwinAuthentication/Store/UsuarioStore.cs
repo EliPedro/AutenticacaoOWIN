@@ -2,6 +2,7 @@
 using OwinAuthentication.Contexto;
 using OwinAuthentication.Models;
 using System;
+using System.Data.Entity;
 using System.Threading.Tasks;
 
 namespace OwinAuthentication.Store
@@ -53,7 +54,14 @@ namespace OwinAuthentication.Store
 
         public Task SetPasswordHashAsync(Usuario user, string passwordHash)
         {
-            throw new NotImplementedException();
+            var result = db.Usuario.Find(user);
+
+            result.Senha = user.Senha;
+
+            db.Entry(result).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Task.FromResult(0);
         }
 
         public Task UpdateAsync(Usuario user)
