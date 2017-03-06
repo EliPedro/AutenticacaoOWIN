@@ -2,12 +2,13 @@
 using OwinAuthentication.Contexto;
 using OwinAuthentication.Models;
 using System;
+using System.Linq;
 using System.Data.Entity;
 using System.Threading.Tasks;
 
 namespace OwinAuthentication.Store
 {
-    public class UsuarioStore : IUserStore<Usuario>, IUserPasswordStore<Usuario>
+    public class UsuarioStore : IUserStore<Usuario,int>, IUserPasswordStore<Usuario, int>
     {
         private DbContexto db = new DbContexto();
 
@@ -28,20 +29,26 @@ namespace OwinAuthentication.Store
             this.Dispose();
         }
 
-        public Task<Usuario> FindByIdAsync(string userId)
+        public Task<Usuario> FindByIdAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
         public Task<Usuario> FindByNameAsync(string userName)
         {
-            var result = db.Usuario.FindAsync(userName);
 
-            return result;
+            var id = (from c in db.Set<Usuario>()
+                      where c.UserName.Equals(userName)
+                      select c.Id).ToList();
+            
+            var aux = (id.Count > 0 ) ? id[0] : 0;
+            
+            var usuario = db.Set<Usuario>().Find(aux);
+
+            return Task.FromResult(usuario);
+
         }
-
-
-
+        
         public Task<string> GetPasswordHashAsync(Usuario user)
         {
             throw new NotImplementedException();
@@ -68,5 +75,7 @@ namespace OwinAuthentication.Store
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

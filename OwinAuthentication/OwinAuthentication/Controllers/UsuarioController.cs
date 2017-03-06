@@ -32,7 +32,7 @@ namespace OwinAuthentication.Controllers
                 //Ou
 
                 var usuarioStore = new UsuarioStore();
-                var usuarioManager = new UserManager<Usuario>(usuarioStore);
+                var usuarioManager = new UserManager<Usuario, int>(usuarioStore);
 
                 //Criar uma identidade
 

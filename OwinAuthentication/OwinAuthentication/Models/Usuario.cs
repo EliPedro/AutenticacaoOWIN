@@ -5,9 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace OwinAuthentication.Models
 {
     [Table("Usuario", Schema ="dbo")]
-    public class Usuario : IUser<string>
+    public class Usuario : IUser<int>
     {
-        public string Id { get; set; } 
+        [Key]
+        public int Id { get; set; } 
 
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "*")]
@@ -18,11 +19,12 @@ namespace OwinAuthentication.Models
         [Required(ErrorMessage = "*")]
         public string Senha { get; set; }
 
+        [NotMapped]
         [DataType(DataType.Password)]
         [Display(Name = "Confirma senha")]
         [Required(ErrorMessage = "*")]
         [Compare("Senha")]
-        public string ConfrimaSenha { get; set; }
+        public string ConfirmaSenha { get; set; }
         
     }
 }
