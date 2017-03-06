@@ -13,5 +13,11 @@ namespace OwinAuthentication.Controllers
         {
             return View();
         }
+
+        public ActionResult Logoff()
+        {
+
+            return View();
+        }
     }
 }

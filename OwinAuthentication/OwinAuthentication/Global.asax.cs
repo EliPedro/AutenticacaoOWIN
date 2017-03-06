@@ -13,6 +13,7 @@ namespace OwinAuthentication
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            Application["App"] = "ASP. NET Identity e a autenticação com componentes OWIN";
         }
     }
 }

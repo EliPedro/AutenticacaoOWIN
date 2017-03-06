@@ -1,22 +1,19 @@
-﻿//using OwinAuthentication.Models;
-//using System.Data.Entity;
-//using System.Data.Entity.ModelConfiguration.Conventions;
+﻿using OwinAuthentication.Models;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 
-//namespace OwinAuthentication.Contexto
-//{
-//    public class DbContexto : DbContext
-//    {
+namespace OwinAuthentication.Contexto
+{
+    public class DbContexto : DbContext
+    {
+     
+        public DbSet<Usuario> Usuario { get; set; }
 
-//        public DbContexto() : base("Owin") { }
-        
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
 
-//        public DbSet<Usuario> Usuario { get; set; }
-
-//        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-//        {
-//            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-//        }
-
-//    }
-//}
+    }
+}

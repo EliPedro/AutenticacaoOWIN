@@ -5,21 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace OwinAuthentication.Models
 {
     [Table("Usuario", Schema ="dbo")]
-    public class Usuario 
+    public class Usuario : IUser<string>
     {
-        //: IUser<string>
         public string Id { get; set; } 
 
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "*")]
         public string UserName { get; set; }
-
-       
+     
         [DataType(DataType.Password)]
         [Display(Name = "Senha")]
         [Required(ErrorMessage = "*")]
         public string Senha { get; set; }
-
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirma senha")]

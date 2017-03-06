@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using OwinAuthentication.Models;
+using OwinAuthentication.Store;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,20 +26,26 @@ namespace OwinAuthentication.Controllers
             {
                 //Obter a UserStore, UserManager
 
-                var usuarioStore = new UserStore<IdentityUser>();
-                var usuarioManager = new UserManager<IdentityUser>(usuarioStore);
+                //var usuarioStore = new UserStore<IdentityUser>();
+                //var usuarioManager = new UserManager<IdentityUser>(usuarioStore);
+
+                //Ou
+
+                var usuarioStore = new UsuarioStore();
+                var usuarioManager = new UserManager<Usuario>(usuarioStore);
 
                 //Criar uma identidade
 
-                var usuarioInfo = new IdentityUser()
-                {
-                    UserName = user.UserName,
-                };
+                //var usuarioInfo = new IdentityUser()
+                //{
+                //    UserName = user.UserName,
+                //};
+                
 
                 //Gravar
 
-                IdentityResult resultado = usuarioManager.Create(usuarioInfo, user.Senha.ToString());
-
+                IdentityResult resultado = usuarioManager.Create(user, user.Senha.ToString());
+                
                 //Se OK
 
                 if (resultado.Succeeded)
@@ -48,7 +55,7 @@ namespace OwinAuthentication.Controllers
 
                     var gerenciadorAutenticaao = HttpContext.GetOwinContext().Authentication;
 
-                    var identidadeUsuario = usuarioManager.CreateIdentity(usuarioInfo, DefaultAuthenticationTypes.ApplicationCookie);
+                    var identidadeUsuario = usuarioManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
 
                     gerenciadorAutenticaao.SignIn(
                         new AuthenticationProperties() { }, identidadeUsuario);
