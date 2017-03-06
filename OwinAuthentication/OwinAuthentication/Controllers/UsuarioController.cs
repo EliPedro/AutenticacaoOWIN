@@ -40,11 +40,13 @@ namespace OwinAuthentication.Controllers
                 //{
                 //    UserName = user.UserName,
                 //};
-                
+
 
                 //Gravar
 
-                IdentityResult resultado = usuarioManager.Create(user, user.Senha.ToString());
+                //IdentityResult resultado = usuarioManager.Create(user, user.Senha.ToString());
+                
+                IdentityResult resultado = usuarioManager.Create(user);
                 
                 //Se OK
 

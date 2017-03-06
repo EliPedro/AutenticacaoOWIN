@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OwinAuthentication.Store
 {
-    public class UsuarioStore : IUserStore<Usuario>
+    public class UsuarioStore : IUserStore<Usuario>, IUserPasswordStore<Usuario>
     {
         private DbContexto db = new DbContexto();
 
@@ -33,6 +33,25 @@ namespace OwinAuthentication.Store
         }
 
         public Task<Usuario> FindByNameAsync(string userName)
+        {
+            var result = db.Usuario.FindAsync(userName);
+
+            return result;
+        }
+
+
+
+        public Task<string> GetPasswordHashAsync(Usuario user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> HasPasswordAsync(Usuario user)
+        {
+            return Task.FromResult(true);
+        }
+
+        public Task SetPasswordHashAsync(Usuario user, string passwordHash)
         {
             throw new NotImplementedException();
         }
