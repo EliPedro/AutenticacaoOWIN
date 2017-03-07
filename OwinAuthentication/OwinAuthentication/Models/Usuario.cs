@@ -10,8 +10,7 @@ namespace OwinAuthentication.Models
     {
         [Key]
         public int Id { get; set; } 
-
-    
+        
         [Display(Name = "Nome", Prompt = "Nome completo")]
         [Required(ErrorMessage = "*")]
         public string UserName { get; set; }
