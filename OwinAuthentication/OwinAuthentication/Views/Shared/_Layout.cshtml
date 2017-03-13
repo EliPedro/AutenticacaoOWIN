@@ -24,11 +24,23 @@
                     <li>@Html.ActionLink("Área Livre", "Index", "Home")</li>
                     <li>@Html.ActionLink("Área Restrita", "Index", "AreaRestrita")</li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Cadastre-se", "Cadastrar", "Usuario")</li>
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav navbar-right">
 
-                    <li>@Html.ActionLink("Login in", "Login", "Login")</li>
-                </ul>
+                        <li>@Html.ActionLink(User.Identity.Name,"")</li>
+                        <li>@Html.ActionLink("Log out", "Logout", "Login")</li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Cadastre-se", "Cadastrar", "Usuario")</li>
+                        <li>@Html.ActionLink("Login in", "Login", "Login")</li>
+
+                    </ul>
+                }
+
             </div>
         </div>
     </div>
@@ -44,7 +56,7 @@
     @Scripts.Render("~/js")
 
     @Scripts.Render("~/bundles/inputmask")
-    
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

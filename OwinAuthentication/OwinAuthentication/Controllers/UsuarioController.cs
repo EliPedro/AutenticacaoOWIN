@@ -25,26 +25,9 @@ namespace OwinAuthentication.Controllers
             if (ModelState.IsValid)
             {
                 //Obter a UserStore, UserManager
-
-                //var usuarioStore = new UserStore<IdentityUser>();
-                //var usuarioManager = new UserManager<IdentityUser>(usuarioStore);
-
-                //Ou
-
+                
                 var usuarioStore = new UsuarioStore();
                 var usuarioManager = new UserManager<Usuario, int>(usuarioStore);
-
-                //Criar uma identidade
-
-                //var usuarioInfo = new IdentityUser()
-                //{
-                //    UserName = user.UserName,
-                //};
-
-
-                //Gravar
-
-                //IdentityResult resultado = usuarioManager.Create(user, user.Senha.ToString());
                 
                 IdentityResult resultado = usuarioManager.Create(user);
                 

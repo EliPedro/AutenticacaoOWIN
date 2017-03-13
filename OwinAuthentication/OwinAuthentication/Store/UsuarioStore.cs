@@ -51,7 +51,15 @@ namespace OwinAuthentication.Store
         
         public Task<string> GetPasswordHashAsync(Usuario user)
         {
-            throw new NotImplementedException();
+            var id = (from c in db.Set<Usuario>()
+                      where c.UserName.Equals(user.UserName) && c.Senha.Equals(user.Senha)
+                      select c.Id).ToList();
+
+            var aux = (id.Count > 0) ? id[0] : 0;
+
+            var usuario = db.Set<Usuario>().Find(aux);
+
+            return Task.FromResult(usuario.Senha);
         }
 
         public Task<bool> HasPasswordAsync(Usuario user)
