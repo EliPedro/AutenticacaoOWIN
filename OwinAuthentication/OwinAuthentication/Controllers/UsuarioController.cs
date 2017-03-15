@@ -22,6 +22,7 @@ namespace OwinAuthentication.Controllers
         [HttpPost]
         public ActionResult Cadastrar(Usuario user)
         {
+            
             if (ModelState.IsValid)
             {
                 //Obter a UserStore, UserManager
@@ -30,19 +31,17 @@ namespace OwinAuthentication.Controllers
                 var usuarioManager = new UserManager<Usuario, int>(usuarioStore);
                 
                 IdentityResult resultado = usuarioManager.Create(user);
-                
+                    
                 //Se OK
-
                 if (resultado.Succeeded)
                 {
-
                     //Autentica e volta para a página inicial
 
-                    var gerenciadorAutenticaao = HttpContext.GetOwinContext().Authentication;
+                    var gerenciadorAutenticao = HttpContext.GetOwinContext().Authentication;
 
                     var identidadeUsuario = usuarioManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
 
-                    gerenciadorAutenticaao.SignIn(
+                    gerenciadorAutenticao.SignIn(
                         new AuthenticationProperties() { }, identidadeUsuario);
 
                     return RedirectToAction("Index", "Home");

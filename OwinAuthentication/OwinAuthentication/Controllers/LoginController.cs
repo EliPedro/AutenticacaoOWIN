@@ -1,18 +1,27 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using OwinAuthentication.Models;
 using OwinAuthentication.Store;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace OwinAuthentication.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Usuario
+
+        /*
+         Esse atributo tem o objetivo de proteger o acesso a sua aplicações 
+         por pedidos Http falsificados, ele garante que o pedido venha somente 
+         da sua View usando uma espécie de "chave".
+         */
+
         public ActionResult Login()
         {
             return View();
@@ -21,29 +30,29 @@ namespace OwinAuthentication.Controllers
         [HttpPost]
         public ActionResult Login(Login login)
         {
-            if(ModelState.IsValid)
-            { 
-            var usuarioStore = new UsuarioStore();
-            var usuarioManager = new UserManager<Usuario, int>(usuarioStore);
-
-            var usuario = usuarioManager.FindByName(login.Nome);
-
-            if (usuario != null)
+            if (ModelState.IsValid)
             {
+                var usuarioStore = new UsuarioStore();
+                var usuarioManager = new UserManager<Usuario, int>(usuarioStore);
 
-                var gerenciadorDeAutenticacao = HttpContext.GetOwinContext().Authentication;
-                var identidadeUsuario = usuarioManager.CreateIdentity(usuario, DefaultAuthenticationTypes.ApplicationCookie);
-                gerenciadorDeAutenticacao.SignIn(new AuthenticationProperties() { IsPersistent = false }, identidadeUsuario);
+                var usuario = usuarioManager.FindByName(login.Nome);
 
-                return RedirectToAction("Index", "Home");
+                if (usuario != null)
+                {
+
+                    var gerenciadorDeAutenticacao = HttpContext.GetOwinContext().Authentication;
+                    var identidadeUsuario = usuarioManager.CreateIdentity(usuario, DefaultAuthenticationTypes.ApplicationCookie);
+                    gerenciadorDeAutenticacao.SignIn(new AuthenticationProperties() { IsPersistent = false }, identidadeUsuario);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Usuário ou senha invalida.");
+
+                    return View(login);
+                }
             }
-            else
-            {
-                ModelState.AddModelError("","Usuário ou senha invalida.");
-
-                return View(login);
-            }
-           }
 
             return View(login);
 
@@ -57,5 +66,14 @@ namespace OwinAuthentication.Controllers
 
             return RedirectToAction("Login");
         }
+
+        [Authorize]
+        public ActionResult Secure()
+        {
+           
+            return View();
+        }
+
     }
 }
+ 
