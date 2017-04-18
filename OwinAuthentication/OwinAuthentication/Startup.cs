@@ -11,13 +11,17 @@ namespace OwinAuthentication
     {
         public void Configuration(IAppBuilder app)
         {
+
+
             ConfigureAuth(app);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Login/Login")
-            });
-
+            });           
+            
+            app.MapSignalR();
+            
         }
     }
 }

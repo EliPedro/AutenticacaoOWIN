@@ -10,20 +10,28 @@ namespace OwinAuthentication.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        public ActionResult Login(string returnUrl = @"\Login\Secure")
+     
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExternalLogin(string provider, string returnUrl)
         {
+
+            if(string.IsNullOrEmpty(returnUrl))
+            {
+                returnUrl = "/Home/Index";
+
+            }
+
             // Request a redirect to the external login provider
-            return new ChallengeResult("Google", Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
+
 
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
             return new RedirectResult(returnUrl);
         }
 
-        // Implementation copied from a standard MVC Project, with some stuff
-        // that relates to linking a new external login to an existing identity
-        // account removed.
         private class ChallengeResult : HttpUnauthorizedResult
         {
             public ChallengeResult(string provider, string redirectUri)
@@ -33,7 +41,7 @@ namespace OwinAuthentication.Controllers
             }
 
             public string LoginProvider { get; set; }
-            public string RedirectUri { get; set; }
+            public string RedirectUri   { get; set; }
 
             public override void ExecuteResult(ControllerContext context)
             {
@@ -42,5 +50,7 @@ namespace OwinAuthentication.Controllers
                 
             }
         }
+
+        
     }
 }

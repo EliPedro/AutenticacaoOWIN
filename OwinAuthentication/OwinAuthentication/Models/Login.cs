@@ -10,7 +10,9 @@ namespace OwinAuthentication.Models
         [Display(Name = "Nome")]
         public string Nome { get; set; }
 
+        [DataType(DataType.Password)]
         [Required(ErrorMessage = "Campo obrigátorio")]
+        [Display(Name = "Senha")]
         public string Senha { get; set; }
     }
 }

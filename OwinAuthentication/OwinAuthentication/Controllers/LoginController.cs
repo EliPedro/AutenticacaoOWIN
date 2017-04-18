@@ -28,7 +28,7 @@ namespace OwinAuthentication.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Login login)
+        public ActionResult Login(Login login, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -44,19 +44,25 @@ namespace OwinAuthentication.Controllers
                     var identidadeUsuario = usuarioManager.CreateIdentity(usuario, DefaultAuthenticationTypes.ApplicationCookie);
                     gerenciadorDeAutenticacao.SignIn(new AuthenticationProperties() { IsPersistent = false }, identidadeUsuario);
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
+                    if(returnUrl == null)
+                    {
+                        returnUrl = "/Home/Index";
+                    }
+
+                    return new RedirectResult(returnUrl);
+                }else
                 {
                     ModelState.AddModelError("", "Usuário ou senha invalida.");
 
                     return View(login);
+
                 }
+                
             }
 
-            return View(login);
-
+            return View();
         }
+
 
         public ActionResult Logout()
         {

@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="alert-success">Exemplo SignalR</h2>
+
+@*@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/SignalR")*@
+<script src="/signalr/hubs" type="text/javascript"></script>
+
+@section scripts {
+
+@Scripts.Render("~/bundles/SignalR")
+
+
+<script src="~/signalr/hubs"></script>
+
+<script>
+
+    $(function () {
+
+        var h = $.connection.exemploHub;
+
+        h.client.exibirMensagem = function (mensagem)
+        {
+            //$("#mensagemDiv").text(mensagem);
+            $("#mensagemDiv").append("<div>" + mensagem + "<div/><hr/>");
+        }
+
+        function EnviarMensagemParaTodos()
+        {
+            var texto = $("#mensagemInput").val();
+            h.server.mensagemParaTodos(texto);
+        }
+
+        $.connection.hub.start();
+
+        $("#enviarButton").click(EnviarMensagemParaTodos);
+
+        $(document).keypress(function (e) {
+           
+            if (e.which == 13) {
+
+                EnviarMensagemParaTodos();
+                $("#mensagemInput").val("");
+
+            }
+        })
+
+
+    });
+</script>
+ }
+
+    <div>
+        <input type="text" id="mensagemInput" />
+        <button type="button" id="enviarButton">Enviar</button>
+        <br />
+
+        <div id="mensagemDiv"></div>
+    </div>

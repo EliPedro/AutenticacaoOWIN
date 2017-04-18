@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using OwinAuthentication.Contexto;
 using OwinAuthentication.Models;
 using OwinAuthentication.Store;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,6 +11,7 @@ namespace OwinAuthentication.Controllers
 {
     public class UsuarioController : Controller
     {
+   
         // GET: Usuario
         public ActionResult Cadastrar()
         {
@@ -59,6 +58,5 @@ namespace OwinAuthentication.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-    }
-
+   }
 }

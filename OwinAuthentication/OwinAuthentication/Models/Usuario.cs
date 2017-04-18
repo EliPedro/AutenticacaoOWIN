@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNet.Identity;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,15 +8,19 @@ namespace OwinAuthentication.Models
     public class Usuario : IUser<int>
     {
         [Key]
+        [Column("Id")]
         public int Id { get; set; } 
+
         
-        [Display(Name = "Nome", Prompt = "Nome completo")]
+        [Display(Name = "Nome")]
         [Required(ErrorMessage = "*")]
+        [Column("UserName")]
         public string UserName { get; set; }
         
         [DataType(DataType.Password)]
-        [Display(Name = "Senha", Prompt = "Senha")]
+        [Display(Name = "Senha")]
         [Required(ErrorMessage = "*")]
+        [Column("Senha")]
         public string Senha { get; set; }
 
         [NotMapped]

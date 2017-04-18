@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - ASP.NET Identity</title>
+    <title>@ViewBag.Title - ASP.NET E-Comerce</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -16,14 +16,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("OWIN", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("E-commerce", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Área Livre", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Administrador", "Index", "Home", new { area = "Admin" },null)</li>
+                    <li>@Html.ActionLink("Área Livre", "Index", "AreaLivre")</li>
                     <li>@Html.ActionLink("Área Restrita", "Index", "AreaRestrita")</li>
                     <li>@Html.ActionLink("Secure", "Secure", "Login")</li>
+                    <li>@Html.ActionLink("Atedimento Online", "Chat", "Chat")</li>
 
                 </ul>
                 @if (Request.IsAuthenticated)

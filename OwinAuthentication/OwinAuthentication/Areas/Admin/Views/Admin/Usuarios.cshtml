@@ -1,0 +1,32 @@
+﻿@model IEnumerable<OwinAuthentication.ServiceReference1.Usuario>
+
+@{
+    ViewBag.Title = "Usuarios";
+}
+
+<h2>Usuários</h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            Nome
+        </th>
+        <th>
+            Senha
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Senha)
+            </td>
+        </tr>
+    }
+
+</table>

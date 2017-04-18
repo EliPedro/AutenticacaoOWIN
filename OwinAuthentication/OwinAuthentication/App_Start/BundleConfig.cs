@@ -31,9 +31,13 @@ namespace OwinAuthentication.App_Start
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content/css").Include(                 
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //bundles.Add(new StyleBundle("~/awes").Include(
+            //          "~/Content/awesome/font-awesome.cs",
+            //          "~/Content/awesome/bootstrap-social.cs"));
 
             bundles.Add(new ScriptBundle("~/bundles/inputmask").Include(
             "~/Scripts/jquery.inputmask/inputmask.js",
@@ -41,7 +45,12 @@ namespace OwinAuthentication.App_Start
             "~/Scripts/jquery.inputmask/inputmask.extensions.js",
             "~/Scripts/jquery.inputmask/inputmask.date.extensions.js",
             "~/Scripts/jquery.inputmask/inputmask.numeric.extensions.js"));
-            
+
+            // SignalR bundle
+            bundles.Add(new ScriptBundle("~/bundles/SignalR").Include(
+                        "~/Scripts/jquery.signalR-{version}.js"));
+
+
         }
     }
 }

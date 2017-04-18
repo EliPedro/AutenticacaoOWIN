@@ -4,6 +4,8 @@
 
 @{
     ViewBag.Title = "Login";
+    ViewBag.ReturnUrl = Request["ReturnUrl"];
+
 }
 
 <h2>Login</h2>
@@ -11,7 +13,7 @@
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Login", "Login", new { ReturnUrl = Request.QueryString["ReturnUrl"]}, FormMethod.Post, new { @class = "form -horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -46,7 +48,7 @@
     </div>
     <div class="col-md-4">
         <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial")
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = Request.QueryString["ReturnUrl"] })
         </section>
     </div>
 </div>

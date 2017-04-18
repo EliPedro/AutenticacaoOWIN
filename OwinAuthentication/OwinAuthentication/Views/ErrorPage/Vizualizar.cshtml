@@ -1,0 +1,16 @@
+﻿@model IList<string>
+
+@{
+    ViewBag.Title = "Vizualizar";
+}
+
+<h2>Vizualizar</h2>
+
+<p class="text-success">OK</p>
+
+@{ 
+    foreach(var item in Model)
+    {
+        <b class="text-uppercase">@item</b>
+    }
+}

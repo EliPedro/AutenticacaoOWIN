@@ -1,21 +1,56 @@
-﻿@using Microsoft.Owin.Security
+﻿@model OwinAuthentication.Models.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
 
-<h4>Utilize outro serviço para Log in</h4>
 <hr />
+<h4>Utilize outro serviço para Log in</h4>
+
+@*<link href="~/Content/font-awesome.css" rel="stylesheet" />*@
+@*<link href="~/Content/bootstrap-social.css" rel="stylesheet" />*@
+
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
 
-    using(Html.BeginForm("Login", "Account"))
-        { 
-            @Html.AntiForgeryToken()
-            <div id="socialLoginList">
-                <p>
-                    @foreach (AuthenticationDescription p in loginProviders)
-                    {
-                        <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
-                    }
-                </p>
-            </div>
-        }
- }
+    @*<a class="btn btn-block btn-social btn-twitter">
+            <span class="fa fa-twitter-square fa-stack-1x"></span> Sign in with Twitter
+        </a>
 
+        <a class="btn btn-social-icon btn-twitter">
+            <span class="fa fa-twitter"></span>
+        </a>*@
+
+
+
+using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+{
+    @Html.AntiForgeryToken()
+    <div id="socialLoginList">
+        <p>
+
+            @foreach (AuthenticationDescription p in loginProviders)
+            {
+
+                if (p.AuthenticationType == "Google")
+                {
+                    <button type="submit" class="btn btn-social-icon btn-google" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in com @p.Caption"><i class="fa fa-google"></i></button>
+
+                }
+                else if (p.AuthenticationType == "Facebook")
+                {
+                    <button type="submit" class="btn btn-social-icon btn-facebook" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in com @p.Caption"><i class="fa fa-facebook fa-lg"></i></button>
+
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-social-icon btn-microsoft" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in com @p.Caption"><i class="fa fa-windows"></i></button>
+
+                }
+            }
+
+        </p>
+    </div>
+}
+}
+
+
+<link href="~/Content/bootstrap-social.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
